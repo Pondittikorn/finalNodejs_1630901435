@@ -58,7 +58,7 @@ app.get('/:id',(req, res) => {
     })
 })
 
-//POST --> req รับข้อมูลมาจากหน้าเว็บ, res จะส่งข้อมูลกลับไปยังหน้าเว็บ
+//POST
 app.use(bodyParser.urlencoded({extended: false})) 
 app.post('/addlotta',(req, res) => {
     pool.getConnection((err, connection) => { 
@@ -70,10 +70,26 @@ app.post('/addlotta',(req, res) => {
                         res.send(`${params.name} is complete adding lotta. `)
                     }else {
                         console.log(err)
-                        }
-                    })           
-                })
-            })
+                    }
+                })           
+    })
+})
+
+//DELETE
+app.delete('/delete/:id',(req, res) => {
+    pool.getConnection((err, connection) =>{
+        if(err) throw err
+        console.log("connected id : ?", connection.threadId)
+        connection.query('DELETE FROM `lotta` WHERE `lotta`.`id` = ?', [req.params.id], (err, rows) => {
+            connection.release();
+            if(!err){ 
+                res.send(`${[req.params.id]} is complete delete lotta. `) 
+            } else {
+                console.log(err)
+            }
+        })
+    })
+})
 
 app.listen(port, () => 
     console.log("listen on port : ?", port)
