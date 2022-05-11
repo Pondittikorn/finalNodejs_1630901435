@@ -4,16 +4,24 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <title>ผลฉลากกินแบ่ง Show by ID</title>
 </head>
 <body>
+    <h1><a href='http://localhost:5000/'>Lotta XD</a></h1>
+    <div class="search-container">
+        <form action="showbyid.ejs" method="get">
+            <input type="text" placeholder="id" name="id">
+            <button type="submit">เช็ค</button>
+        </form>
+    </div>
     <table>
         <tr>
-            <th>date</th>
-            <th>type</th>
-            <th>id</th>
-            <th>num</th>
-            <th>reward</th>
+            <th>งวดวันที่</th>
+            <th>หมวด</th>
+            <th>เลข</th>
+            <th>จำนวน</th>
+            <th>รางวัล</th>
         </tr>
         <% lotta.forEach(function(lotta) { %>
         <tr>

@@ -10,6 +10,7 @@ const port = process.env.PORT || 5000;
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false}))
 
+app.use(express.static('public'))
 app.set('view engine','ejs')
 
 //MySQL Connect phpMyAdmin
@@ -27,6 +28,10 @@ var obj = {}
 
 app.get('/addlotta',(req, res) => {   
     res.render('addlotta')
+})
+
+app.get('/credits',(req, res) => {   
+    res.render('credits')
 })
 
 app.get('',(req, res) => {
@@ -55,8 +60,8 @@ app.get('/:id',(req, res) => {
             connection.release();
             if(!err){
                 //res.send(rows)
-                obj = { lotta : rows, Error : err}
-                res.render('showbyid.ejs', obj)
+                obj = { lotta : rows, Error : err,}
+                res.render('showbyid', obj)
             } else {
                 console.log(err)
             }

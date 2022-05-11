@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Farro:wght@400;700&display=swap');
+
+:root {
+    --dark60 : rgba(255, 255, 255, 0.6);
+    --transition : all 0.3s ease 0s
+}
+
+/* All Section */
+
+html, body {
+    font-family: 'Farro', sans-serif;
+    background-color: rgb(226, 236, 169);
+    height: 100%;
+    overflow: auto;
+}
+
+a, button{
+    font-family: 'Farro', sans-serif;
+    color: var(--light);
+    padding-left: 30px;
+    padding-right: 40px;
+}
+
+th, td {
+    font-family: 'Farro', sans-serif;
+    padding-top: 5px;
+    padding-bottom: 10px;
+    padding-left: 30px;
+    padding-right: 40px;
+    background-color: rgb(139, 219, 213);
+}
+
+.search-container input[type=text] {
+    font-family: 'Farro', sans-serif;
+    padding: 5px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    font-size: 25px;
+}
+  .search-container button {
+    font-family: 'Farro', sans-serif;
+    padding: 5px;
+    margin-top: 5px;
+    margin-right: 25px;
+    margin-bottom: 10px;
+    border: none;
+    background: rgba(170, 163, 163, 0.938);
+    font-size: 25px;
+    cursor: pointer;
+}
