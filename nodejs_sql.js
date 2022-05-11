@@ -91,6 +91,22 @@ app.delete('/delete/:id',(req, res) => {
     })
 })
 
+//PUT
+app.put('/update',(req, res) => {
+    pool.getConnection((err, connection) =>{
+        console.log("connected id : ?", connection.threadId)
+        const {date, type, id, num, reward} = req.body 
+        connection.query('UPDATE lotta SET type = ?, id = ?, num = ?, reward = ? WHERE date = ?', [type, id, num, reward, date], (err, rows) => {
+            connection.release();
+            if(!err){ 
+                res.send(`${type} is complete update lotta. `) 
+            } else {
+                console.log(err)
+            }
+        })
+    })
+})
+
 app.listen(port, () => 
     console.log("listen on port : ?", port)
     )
