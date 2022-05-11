@@ -6,9 +6,12 @@ const mysql = require('mysql')
  
 const app = express()
 const port = process.env.PORT || 5000;
- 
+
 app.use(bodyParser.json())
- 
+app.use(bodyParser.urlencoded({extended: false}))
+
+app.set('view engine','ejs')
+
 //MySQL Connect phpMyAdmin
 const pool = mysql.createPool({
     connectionLimit : 10,
@@ -19,20 +22,18 @@ const pool = mysql.createPool({
     database : 'lotta_database' //Connect Database from beers.sql (Import to phpMyAdmin)
 })
  
-//GET (เรียกข้อมูลขึ้นมาดู) | POST (ส่งข้อมูลหน้า Website กลับเข้ามา)
+//GET
+var obj = {}
 app.get('',(req, res) => {
  
-    pool.getConnection((err, connection) => {  //err คือ connect ไม่ได้ or connection คือ connect ได้ บรรทัดที่ 13-20
+    pool.getConnection((err, connection) => {
         if(err) throw err
-        console.log("connected id : ?" ,connection.threadId) //ให้ print บอกว่า Connect ได้ไหม
-        //console.log(`connected id : ${connection.threadId}`) //ต้องใช้ ` อยู่ตรงที่เปลี่ยนภาษา ใช้ได้ทั้ง 2 แบบ
-         
+        console.log("connected id : ?" ,connection.threadId)
         connection.query('SELECT * FROM lotta', (err, rows) => { 
             connection.release();
-            if(!err){ //ถ้าไม่ error จะใส่ในตัวแปร rows
-                //console.log(rows)
-                //res.json(rows)
-                res.send(rows)
+            if(!err){ 
+                obj = { lotta: rows, Error : err}
+                res.render('index', obj)
             } else {
                 console.log(err)
             }
@@ -59,7 +60,6 @@ app.get('/:id',(req, res) => {
 })
 
 //POST
-app.use(bodyParser.urlencoded({extended: false})) 
 app.post('/addlotta',(req, res) => {
     pool.getConnection((err, connection) => {
         if(err) throw err

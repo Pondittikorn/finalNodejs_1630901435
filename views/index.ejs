@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ผลฉลากกินแบ่ง lotta</title>
+</head>
+<body>
+    <table>
+        <tr>
+            <th>date</th>
+            <th>type</th>
+            <th>id</th>
+            <th>num</th>
+            <th>reward</th>
+        </tr>
+        <% lotta.forEach(function(lotta) { %>
+        <tr>
+            <td><%= lotta.date %></td>
+            <td><%= lotta.type %></td>
+            <td><%= lotta.id %></td>
+            <td><%= lotta.num %></td>
+            <td><%= lotta.reward %></td>
+        </tr>
+        <% }) %>
+    </table>
+</body>
+</html>
