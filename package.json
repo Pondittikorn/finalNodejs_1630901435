@@ -1,0 +1,25 @@
+{
+  "name": "finalnodejs_1630901435",
+  "version": "1.0.0",
+  "description": "",
+  "main": "nodejs_sql.js",
+  "scripts": {
+    "start": "nodemon nodejs_sql.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Pondittikorn/finalNodejs_1630901435.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Pondittikorn/finalNodejs_1630901435/issues"
+  },
+  "homepage": "https://github.com/Pondittikorn/finalNodejs_1630901435#readme",
+  "dependencies": {
+    "body-parser": "^1.20.0",
+    "express": "^4.18.1",
+    "mysql": "^2.18.1"
+  }
+}
