@@ -20,7 +20,6 @@ const pool = mysql.createPool({
 })
  
 //GET (เรียกข้อมูลขึ้นมาดู) | POST (ส่งข้อมูลหน้า Website กลับเข้ามา)
-//GET All Beers (beers.sql)
 app.get('',(req, res) => {
  
     pool.getConnection((err, connection) => {  //err คือ connect ไม่ได้ or connection คือ connect ได้ บรรทัดที่ 13-20
@@ -41,8 +40,6 @@ app.get('',(req, res) => {
     })
 })
  
-//Copy บรรทัดที่ 24 - 42 มาปรับแก้ Code ใหม่
-//สร้างหน้าย่อย ดึงข้อมูลเฉพาะ id ที่ต้องการ คือ 123, 124, 125
 app.get('/:id',(req, res) => {
  
     pool.getConnection((err, connection) => {  //err คือ connect ไม่ได้ or connection คือ connect ได้ บรรทัดที่ 13-20
@@ -60,6 +57,23 @@ app.get('/:id',(req, res) => {
          }) 
     })
 })
+
+//POST --> req รับข้อมูลมาจากหน้าเว็บ, res จะส่งข้อมูลกลับไปยังหน้าเว็บ
+app.use(bodyParser.urlencoded({extended: false})) 
+app.post('/addlotta',(req, res) => {
+    pool.getConnection((err, connection) => { 
+        if(err) throw err
+            const params = req.body
+                connection.query('INSERT INTO lotta SET ?', params, (err, rows) => {
+                    connection.release()
+                    if(!err){
+                        res.send(`${params.name} is complete adding lotta. `)
+                    }else {
+                        console.log(err)
+                        }
+                    })           
+                })
+            })
 
 app.listen(port, () => 
     console.log("listen on port : ?", port)
