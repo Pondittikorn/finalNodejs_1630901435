@@ -24,6 +24,11 @@ const pool = mysql.createPool({
  
 //GET
 var obj = {}
+
+app.get('/addlotta',(req, res) => {   
+    res.render('addlotta')
+})
+
 app.get('',(req, res) => {
  
     pool.getConnection((err, connection) => {
@@ -43,15 +48,15 @@ app.get('',(req, res) => {
  
 app.get('/:id',(req, res) => {
  
-    pool.getConnection((err, connection) => {  //err คือ connect ไม่ได้ or connection คือ connect ได้ บรรทัดที่ 13-20
+    pool.getConnection((err, connection) => {
         if(err) throw err
-        console.log("connected id : ?" ,connection.threadId) //ให้ print บอกว่า Connect ได้ไหม
-        //console.log(`connected id : ${connection.threadId}`) //ต้องใช้ ` อยู่ตรงที่เปลี่ยนภาษา ใช้ได้ทั้ง 2 แบบ
- 
+        console.log("connected id : ?" ,connection.threadId)
         connection.query('SELECT * FROM lotta WHERE `id` = ?', req.params.id, (err, rows) => { 
             connection.release();
-            if(!err){ //ถ้าไม่ error จะใส่ในตัวแปร rows
-                res.send(rows)
+            if(!err){
+                //res.send(rows)
+                obj = { lotta : rows, Error : err}
+                res.render('showbyid.ejs', obj)
             } else {
                 console.log(err)
             }
@@ -71,13 +76,17 @@ app.post('/addlotta',(req, res) => {
                             connection.query('INSERT INTO lotta SET ?', params, (err, rows) => {
                                 connection.release()
                                 if(!err){
-                                    res.send(`${params.name} is complete adding lotta. `)
+                                    //res.send(`${params.name} is complete adding lotta. `)
+                                    obj = {Error:err, mesg : `Success adding lotta ${params.name}`}                                   
+                                    res.render('addlotta', obj)
                                 }else {
                                     console.log(err)
                                     }
                                 })           
                         } else {
-                            res.send(`${params.name} do not insert lotta`)
+                            //res.send(`${params.name} do not insert lotta`)
+                            obj = {Error:err, mesg : `Can not adding lotta ${params.name}`}                           
+                            res.render('addlotta', obj)
                         }
                     })
                 })
