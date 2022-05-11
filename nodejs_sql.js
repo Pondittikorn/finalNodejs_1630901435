@@ -61,17 +61,26 @@ app.get('/:id',(req, res) => {
 //POST
 app.use(bodyParser.urlencoded({extended: false})) 
 app.post('/addlotta',(req, res) => {
-    pool.getConnection((err, connection) => { 
+    pool.getConnection((err, connection) => {
         if(err) throw err
             const params = req.body
-                connection.query('INSERT INTO lotta SET ?', params, (err, rows) => {
-                    connection.release()
-                    if(!err){
-                        res.send(`${params.name} is complete adding lotta. `)
-                    }else {
-                        console.log(err)
-                    }
-                })           
+                //Check 
+                pool.getConnection((err, connection2) => {
+                    connection2.query(`SELECT COUNT(id) AS count FROM lotta WHERE id = ${params.id}`, (err, rows) => {
+                        if(!rows[0].count){
+                            connection.query('INSERT INTO lotta SET ?', params, (err, rows) => {
+                                connection.release()
+                                if(!err){
+                                    res.send(`${params.name} is complete adding lotta. `)
+                                }else {
+                                    console.log(err)
+                                    }
+                                })           
+                        } else {
+                            res.send(`${params.name} do not insert lotta`)
+                        }
+                    })
+                })
     })
 })
 
